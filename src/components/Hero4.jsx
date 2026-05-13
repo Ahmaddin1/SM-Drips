@@ -170,7 +170,7 @@ export default function Hero4() {
         })
         .to(overlayRef.current, {
           yPercent: -100,
-          duration: 0.9,
+          duration: 1.3,
           ease: "expo.inOut",
         })
         .add(runHeroEntry, "-=0.5")
@@ -196,8 +196,10 @@ export default function Hero4() {
           className="font-heading text-6xl uppercase  text-[#e9e9e9]"
           style={{ opacity: 0 }}
         >
-          <span className="overflow-clip">SM</span>{" "}
-          <span className="overflow-clip">DRIPS</span>
+          <div className="overflow-y-clip">
+            <span className="overflow-clip">SM</span>{" "}
+            <span className="overflow-clip">DRIPS</span>
+          </div>
         </span>
       </div>
 
@@ -205,18 +207,11 @@ export default function Hero4() {
         ref={containerRef}
         className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black py-20"
       >
-        {/* Ghost background word */}
         <div className="hero-bg-word pointer-events-none absolute inset-0 flex items-center justify-center font-heading text-[clamp(120px,25vw,320px)] font-bold uppercase leading-none tracking-tight opacity-0 text-white/10">
           DRIP
         </div>
 
         <div className="relative z-10 flex flex-col items-center gap-12 px-6 text-center">
-          {/* Season tag */}
-          {/* <div className="hero-season text-[11px] uppercase tracking-[3px] text-[#defc3e] opacity-0">
-            New Drop &mdash; SS26
-          </div> */}
-
-          {/* Headline */}
           <div
             className="hero-main flex flex-col items-center gap-2"
             aria-label="NO RULES. JUST DRIP."
@@ -258,7 +253,6 @@ export default function Hero4() {
             </div>
           </div>
 
-          {/* CTA row */}
           <div className="hero-cta-row flex flex-wrap justify-center gap-3 opacity-0">
             <Link
               href="/products"

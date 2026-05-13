@@ -94,11 +94,13 @@ export function validateCartItem(item, product) {
   const nextOriginalPrice = originalPrice != null ? getSafePrice(originalPrice) : null;
   const isOriginalPriceMismatch = currentOriginalPrice !== nextOriginalPrice;
   const isQuantityMismatch = requestedQuantity !== quantity;
+  const isSkuMismatch = (item?.sku ?? "") !== (sizeEntry?.sku ?? "");
 
   return {
     isValid:
       !isMissingProduct &&
       !isMissingSize &&
+      !isSkuMismatch &&
       !isPriceMismatch &&
       !isOriginalPriceMismatch &&
       !isQuantityMismatch,

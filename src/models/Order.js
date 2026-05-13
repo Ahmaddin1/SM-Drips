@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { MAX_TIP, MIN_TIP } from "@/lib/constants";
 
 const { Schema } = mongoose;
 
@@ -148,7 +149,8 @@ const orderSchema = new Schema(
       type: Number,
       required: true,
       default: 0,
-      min: 0,
+      min: [MIN_TIP, "Tip cannot be negative"],
+      max: [MAX_TIP, `Tip cannot exceed Rs. ${MAX_TIP}`],
     },
     subtotal: {
       type: Number,

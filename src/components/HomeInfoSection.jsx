@@ -21,7 +21,7 @@ export default function HomeInfoSection() {
     },
     {
       q: "Do you offer returns or exchanges?",
-      a: "Yes. Easy 14-day exchange policy on unworn items with tags intact.",
+      a: "Yes. Easy 7-day exchange policy on unworn items with tags intact.",
     },
     {
       q: "Is Cash on Delivery available?",
@@ -206,7 +206,7 @@ export default function HomeInfoSection() {
           <p className="text-sm leading-relaxed text-[#aaa]">
             Need help?{" "}
             <a
-              href="https://wa.me/923190328248"
+              href="https://wa.me/923396049590"
               className="font-bold text-[#E9E9E9]"
             >
               WhatsApp us anytime.

@@ -24,7 +24,8 @@ function isValidSize(sizeEntry) {
     sizeEntry &&
     typeof sizeEntry === "object" &&
     ALLOWED_SIZES.has(sizeEntry.size) &&
-    Number.isFinite(sizeEntry.stock)
+    Number.isFinite(sizeEntry.stock) &&
+    isNonEmptyString(sizeEntry.sku)
   );
 }
 
@@ -99,9 +100,10 @@ function normalizeProduct(product) {
       url,
       order,
     })),
-    sizes: sizes.map(({ size, stock }) => ({
+    sizes: sizes.map(({ size, stock, sku }) => ({
       size,
       stock,
+      sku,
     })),
     ...(tags ? { tags } : {}),
     category: {

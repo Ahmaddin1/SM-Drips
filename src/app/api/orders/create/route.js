@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import sanitize from "mongo-sanitize";
 import dbConnect from "@/lib/db";
+import { MAX_TIP, MIN_TIP } from "@/lib/constants";
 import Order from "@/models/Order";
 import Product from "@/models/Product";
 
@@ -45,8 +46,14 @@ function getPositiveInteger(value) {
   return parsedValue;
 }
 
-function toMinorUnits(value) {
-  return Math.round(Number(value) * 100);
+function clampTip(value) {
+  const parsedValue = Number.parseInt(value ?? 0, 10);
+
+  if (Number.isNaN(parsedValue)) {
+    return MIN_TIP;
+  }
+
+  return Math.max(MIN_TIP, Math.min(parsedValue, MAX_TIP));
 }
 
 function generateOrderId() {
@@ -217,7 +224,7 @@ function validateItems(items) {
     if (
       typeof safeProductId !== "string" ||
       typeof safeProductName !== "string" ||
-      typeof safeSku !== "string" ||
+      (safeSku != null && typeof safeSku !== "string") ||
       (safeSlug != null && typeof safeSlug !== "string") ||
       typeof safeColor !== "string" ||
       typeof safeColorHex !== "string" ||
@@ -260,10 +267,6 @@ function validateItems(items) {
 
     if (!productName) {
       return { error: `Item ${index + 1} productName is required.` };
-    }
-
-    if (!sku) {
-      return { error: `Item ${index + 1} sku is required.` };
     }
 
     if (!color) {
@@ -394,25 +397,11 @@ export async function POST(request) {
       return badRequest("Invalid payment method.");
     }
 
-    const subtotal = getNonNegativeNumber(body?.subtotal);
     const shippingCost = getNonNegativeNumber(body?.shippingCost);
-    const tip = getNonNegativeNumber(body?.tip);
-    const totalAmount = getNonNegativeNumber(body?.totalAmount);
-
-    if (subtotal == null) {
-      return badRequest("Subtotal is invalid.");
-    }
+    const tip = clampTip(body?.tip);
 
     if (shippingCost == null || !VALID_SHIPPING_COSTS.has(shippingCost)) {
       return badRequest("Shipping cost is invalid.");
-    }
-
-    if (tip == null) {
-      return badRequest("Tip amount is invalid.");
-    }
-
-    if (totalAmount == null) {
-      return badRequest("Total amount is invalid.");
     }
 
     const customer = customerValidation.value;
@@ -513,13 +502,6 @@ export async function POST(request) {
       0,
     );
     const serverTotal = serverSubtotal + shippingCost + tip;
-
-    if (
-      toMinorUnits(subtotal) !== toMinorUnits(serverSubtotal) ||
-      toMinorUnits(totalAmount) !== toMinorUnits(serverTotal)
-    ) {
-      return badRequest("Order total mismatch. Please refresh and try again.");
-    }
 
     const order = await createOrderWithUniqueId({
       customer: {

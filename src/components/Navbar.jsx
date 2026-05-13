@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -33,12 +34,15 @@ export default function Navbar({ brandName }) {
     <>
       <div className="pointer-events-none sticky top-4 z-50 flex w-full justify-center md:hidden">
         <div className="pointer-events-auto flex w-[90%] items-center justify-between rounded-full border border-[#3a3a3a] bg-black/60 backdrop-blur-md px-5 py-3">
-        <Link
-          href="/"
-          className="font-heading text-[20px] tracking-[3px] text-[#e9e9e9]"
-        >
-          {brandName}
-        </Link>
+          <Link href="/" aria-label={brandName} className="shrink-0">
+            <Image
+              src="/icon.png"
+              alt={brandName}
+              width={36}
+              height={36}
+              className="rounded-sm"
+            />
+          </Link>
 
           <div className="flex items-center gap-2 ">
             <Link
@@ -68,11 +72,14 @@ export default function Navbar({ brandName }) {
 
       <div className="pointer-events-none sticky top-4 z-50 hidden w-full justify-center md:flex">
         <div className="pointer-events-auto relative flex w-[65%] items-center rounded-full border border-[#3a3a3a] bg-black/60 backdrop-blur-md px-5 py-3">
-          <Link
-            href="/"
-            className="font-heading text-[20px] tracking-[3px] text-[#e9e9e9]"
-          >
-            {brandName}
+          <Link href="/" aria-label={brandName} className="shrink-0">
+            <Image
+              src="/icon.png"
+              alt={brandName}
+              width={40}
+              height={40}
+              className="rounded-sm"
+            />
           </Link>
 
           <nav className="absolute left-1/2 flex -translate-x-1/2 items-center gap-8">

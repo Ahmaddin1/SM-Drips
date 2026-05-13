@@ -53,7 +53,7 @@ function ThankYouContent() {
         duration: 0.6,
         stagger: 0.2,
         ease: "power2.out",
-      }
+      },
     );
 
     intervalRef.current = setInterval(() => {
@@ -94,17 +94,29 @@ function ThankYouContent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#000000] px-4 py-10">
       <div className="w-full max-w-2xl text-center">
-        <div ref={iconRef} className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[#2f3810] bg-[rgba(222,252,62,0.1)] opacity-0">
-          <CheckCircle2 className="h-11 w-11 text-[#DEFC3E]" strokeWidth={1.8} />
+        <div
+          ref={iconRef}
+          className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[#2f3810] bg-[rgba(222,252,62,0.1)] opacity-0"
+        >
+          <CheckCircle2
+            className="h-11 w-11 text-[#DEFC3E]"
+            strokeWidth={1.8}
+          />
         </div>
 
-        <h1 ref={titleRef} className="mt-8 text-3xl font-bold text-[#e9e9e9] sm:text-4xl opacity-0">
+        <h1
+          ref={titleRef}
+          className="mt-8 text-3xl font-bold text-[#e9e9e9] sm:text-4xl opacity-0"
+        >
           Thank You for Your Order!
         </h1>
 
-        <p ref={descRef} className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#6b6b6b] sm:text-base opacity-0">
-          Your order has been successfully placed. We will contact you
-          shortly to confirm your order.
+        <p
+          ref={descRef}
+          className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#6b6b6b] sm:text-base opacity-0"
+        >
+          Your order has been successfully placed. We will contact you shortly
+          to confirm your order.
         </p>
 
         <div ref={orderIdRef} className="mt-8 opacity-0">
@@ -129,7 +141,10 @@ function ThankYouContent() {
           </div>
         </div>
 
-        <p ref={contactRef} className="mx-auto mt-8 max-w-xl text-sm leading-7 text-[#6b6b6b] opacity-0">
+        <p
+          ref={contactRef}
+          className="mx-auto mt-8 max-w-xl text-sm leading-7 text-[#6b6b6b] opacity-0"
+        >
           Have questions? Reach us at{" "}
           <a
             href="mailto:help@surteez.com"
@@ -139,12 +154,12 @@ function ThankYouContent() {
           </a>{" "}
           or WhatsApp us at{" "}
           <a
-            href="https://wa.me/923190328248"
+            href="https://wa.me/923396049590"
             target="_blank"
             rel="noreferrer"
             className="text-[#DEFC3E] transition-opacity hover:opacity-80"
           >
-            0319-0328248
+            0339-6049590
           </a>
           .
         </p>

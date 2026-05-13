@@ -117,10 +117,10 @@ export default function ReturnsPage() {
         <section className="mb-0">
           <h2 className="text-base font-medium text-[#E9E9E9] mb-4">Need Help?</h2>
           <p className="text-sm text-[#aaa] leading-[1.9]">
-            Contact us on WhatsApp or at <a href="mailto:contact@smdrips.com" className="text-[#defc3e] hover:underline">contact@smdrips.com</a> for any questions about returns or exchanges.
+            Contact us on WhatsApp or at <a href="mailto:contact@smgarments.shop" className="text-[#defc3e] hover:underline">contact@smgarments.shop</a> for any questions about returns or exchanges.
           </p>
           <a
-            href="https://wa.me/923190328248"
+            href="https://wa.me/923396049590"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block mt-4 bg-[#defc3e] text-[#000000] text-xs font-semibold px-4 py-2.5 tracking-wide rounded-md hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(222,252,62,0.5)] transition-all duration-300"

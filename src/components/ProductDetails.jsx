@@ -216,11 +216,11 @@ export default function ProductDetails({ product }) {
     if (!selectedSize || isOutOfStock) {
       return;
     }
-    console.log("product.sku:", currentProduct.sku);
+
     addToCart({
       productId: currentProduct._id,
       slug: currentProduct.slug,
-      sku: currentProduct.sku,
+      sku: selectedSizeEntry?.sku ?? currentProduct.sku ?? "",
       name: currentProduct.name,
       image: sortedImages[0]?.url ?? "",
       color: currentProduct.color,

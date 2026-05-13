@@ -11,17 +11,20 @@ export default function SmoothScroll({ children }) {
   const lenisRef = useRef(null);
 
   useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       smoothWheel: true,
-      smoothTouch: true,
-      touchMultiplier: 2,
+      wheelMultiplier: 0.8,
+      smoothTouch: !isMobile,
+      touchMultiplier: 0.8,
+      touchInertiaMultiplier: isMobile ? 20 : 35,
       infinite: false,
       syncTouch: true,
     });
-
     lenisRef.current = lenis;
 
     // Sync Lenis scroll position with GSAP ScrollTrigger

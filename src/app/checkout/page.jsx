@@ -15,6 +15,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { MAX_TIP, MIN_TIP } from "@/lib/constants";
 
 // export const metadata = {
 //   title: "Checkout",
@@ -53,6 +54,16 @@ function joinClasses(...classes) {
 
 function formatPrice(value) {
   return Number(value ?? 0).toLocaleString("en-PK");
+}
+
+function clampTipAmount(value) {
+  const numericValue = Number.parseInt(value ?? 0, 10);
+
+  if (Number.isNaN(numericValue)) {
+    return MIN_TIP;
+  }
+
+  return Math.max(MIN_TIP, Math.min(numericValue, MAX_TIP));
 }
 
 function getImageSrc(image) {
@@ -125,6 +136,7 @@ function InputField({
   fieldRef,
   autoComplete,
   min,
+  max,
   step,
 }) {
   return (
@@ -139,6 +151,7 @@ function InputField({
         type={type}
         value={value}
         min={min}
+        max={max}
         step={step}
         autoComplete={autoComplete}
         placeholder={placeholder}
@@ -430,6 +443,7 @@ export default function CheckoutPage() {
   const [customTipValue, setCustomTipValue] = useState("");
   const [tipConfirmed, setTipConfirmed] = useState(false);
   const [tipConfirmedAmount, setTipConfirmedAmount] = useState(0);
+  const [showTipCapWarning, setShowTipCapWarning] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
     emailOffers: false,
@@ -464,24 +478,21 @@ export default function CheckoutPage() {
     0,
   );
 
-  let liveTipAmount = 0;
+  let rawLiveTipAmount = 0;
 
   if (tipEnabled) {
     if (selectedTipOption === "10") {
-      liveTipAmount = Math.round(subtotal * 0.1);
+      rawLiveTipAmount = Math.round(subtotal * 0.1);
     } else if (selectedTipOption === "15") {
-      liveTipAmount = Math.round(subtotal * 0.15);
+      rawLiveTipAmount = Math.round(subtotal * 0.15);
     } else if (selectedTipOption === "20") {
-      liveTipAmount = Math.round(subtotal * 0.2);
+      rawLiveTipAmount = Math.round(subtotal * 0.2);
     } else if (selectedTipOption === "custom") {
-      const parsedCustomTip = Number(customTipValue);
-      liveTipAmount =
-        Number.isFinite(parsedCustomTip) && parsedCustomTip > 0
-          ? Math.floor(parsedCustomTip)
-          : 0;
+      rawLiveTipAmount = clampTipAmount(customTipValue);
     }
   }
 
+  const liveTipAmount = clampTipAmount(rawLiveTipAmount);
   const tipAmount = tipConfirmed ? tipConfirmedAmount : liveTipAmount;
   const total = subtotal + shippingCost + tipAmount;
   const previewItem = cartItems[0] ?? null;
@@ -531,15 +542,25 @@ export default function CheckoutPage() {
 
   function selectTipOption(option) {
     setSelectedTipOption(option);
+    setShowTipCapWarning(false);
 
     if (option !== "custom") {
       clearFieldError("customTip");
+    }
+
+    if (option === "10") {
+      setShowTipCapWarning(Math.round(subtotal * 0.1) > MAX_TIP);
+    } else if (option === "15") {
+      setShowTipCapWarning(Math.round(subtotal * 0.15) > MAX_TIP);
+    } else if (option === "20") {
+      setShowTipCapWarning(Math.round(subtotal * 0.2) > MAX_TIP);
     }
   }
 
   function updateCustomTip(nextValue) {
     if (nextValue === "") {
       setCustomTipValue("");
+      setShowTipCapWarning(false);
 
       if (selectedTipOption === "custom") {
         setSelectedTipOption("none");
@@ -548,13 +569,12 @@ export default function CheckoutPage() {
       return;
     }
 
-    const parsedValue = Number(nextValue);
-    const safeValue =
-      Number.isFinite(parsedValue) && parsedValue > 0
-        ? Math.floor(parsedValue)
-        : 0;
+    const parsedValue = Number.parseInt(nextValue, 10);
+    const attemptedValue = Number.isNaN(parsedValue) ? MIN_TIP : parsedValue;
+    const safeValue = clampTipAmount(attemptedValue);
 
     setCustomTipValue(String(safeValue));
+    setShowTipCapWarning(attemptedValue > MAX_TIP);
 
     if (safeValue > 0) {
       setSelectedTipOption("custom");
@@ -565,10 +585,12 @@ export default function CheckoutPage() {
 
   function adjustCustomTip(amount) {
     const currentValue = Number(customTipValue || 0);
-    const nextValue = Math.max(0, currentValue + amount);
+    const attemptedValue = currentValue + amount;
+    const nextValue = clampTipAmount(attemptedValue);
 
     setCustomTipValue(nextValue > 0 ? String(nextValue) : "");
     setSelectedTipOption(nextValue > 0 ? "custom" : "none");
+    setShowTipCapWarning(attemptedValue > MAX_TIP);
   }
 
   useEffect(() => {
@@ -859,7 +881,7 @@ export default function CheckoutPage() {
         })),
         subtotal,
         shippingCost,
-        tip: tipAmount,
+        tip: clampTipAmount(tipAmount),
         totalAmount: total,
         paymentMethod,
       };
@@ -1334,7 +1356,8 @@ export default function CheckoutPage() {
                             label="Custom tip"
                             name="customTip"
                             type="number"
-                            min="0"
+                            min={MIN_TIP}
+                            max={MAX_TIP}
                             step="50"
                             value={customTipValue}
                             onChange={(_, value) => updateCustomTip(value)}
@@ -1375,6 +1398,16 @@ export default function CheckoutPage() {
                         >
                           Add tip
                         </button>
+
+                        <p className="text-xs text-[#6b6b6b]">
+                          Max tip: Rs. {MAX_TIP.toLocaleString("en-PK")}
+                        </p>
+
+                        {showTipCapWarning ? (
+                          <p className="text-xs text-[#DEFC3E]">
+                            ZIADA PAISE AA GAI HAIN ??
+                          </p>
+                        ) : null}
                       </div>
                     ) : null}
 

@@ -2,6 +2,11 @@ import { FaInstagram, FaTiktok, FaWhatsapp, FaFacebook } from 'react-icons/fa'
 import Link from 'next/link'
 
 export default function Footer() {
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
+  const whatsappHref = whatsappNumber
+    ? `https://wa.me/${whatsappNumber.replace(/\D/g, '')}`
+    : null
+
   return (
     <footer className="bg-[#000000] text-[#E9E9E9] px-6 lg:px-16 pt-16 pb-0">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 pb-14 border-b border-[#282828]">
@@ -10,15 +15,17 @@ export default function Footer() {
           <p className="text-xs text-[#666] leading-relaxed mb-6 max-w-50">
             Premium streetwear built for everyday wear. Fast dispatch across Pakistan.
           </p>
-          <a
-            href="https://wa.me/923190328248"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#defc3e] text-[#000000] text-xs font-semibold px-4 py-2.5 tracking-wide rounded-md hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(222,252,62,0.5)] transition-all duration-300"
-          >
-            <FaWhatsapp size={15} />
-            Chat on WhatsApp
-          </a>
+          {whatsappHref ? (
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#defc3e] text-[#000000] text-xs font-semibold px-4 py-2.5 tracking-wide rounded-md hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(222,252,62,0.5)] transition-all duration-300"
+            >
+              <FaWhatsapp size={15} />
+              Chat on WhatsApp
+            </a>
+          ) : null}
         </div>
 
         <div>
@@ -93,9 +100,19 @@ export default function Footer() {
           </div>
           <h4 className="text-[10px] tracking-[3px] text-[#555] uppercase mb-5 mt-0">CONTACT</h4>
           <div className="flex flex-col gap-3">
-            <a href="mailto:contact@smdrips.com" className="text-[13px] text-[#defc3e] hover:underline">
-              contact@smdrips.com
+            <a href="mailto:contact@smgarments.shop" className="text-[13px] text-[#defc3e] hover:underline">
+              contact@smgarments.shop
             </a>
+            {whatsappNumber ? (
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[13px] text-[#defc3e] hover:underline"
+              >
+                0339-6049590
+              </a>
+            ) : null}
             <p className="text-[13px] text-[#aaa]">Nationwide COD — All over Pakistan</p>
           </div>
         </div>

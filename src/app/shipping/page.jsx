@@ -8,7 +8,7 @@ export default function ShippingPage() {
   return (
     <main className="min-h-screen bg-[#000000] text-[#E9E9E9]">
       <h1 className="text-4xl font-normal text-center text-[#E9E9E9] mb-10 pt-24">Shipping Policy</h1>
-      <div className="pl-6 lg:pl-16 pr-6 pb-24 max-w-[800px]">
+      <div className="pl-6 lg:pl-16 pr-6 pb-24 max-w-200">
         
         <p className="text-sm text-[#aaa] leading-[1.9] mb-12">
           At SM Drips, we work to get your order to you as fast and safely as possible. Please read this policy carefully before placing your order.
@@ -18,7 +18,7 @@ export default function ShippingPage() {
           <h2 className="text-base font-medium text-[#E9E9E9] mb-4">Order Processing Time</h2>
           <ul className="list-disc list-outside pl-5 flex flex-col gap-3">
             <li className="text-sm text-[#aaa] leading-[1.9]">
-              All orders are processed within 1–2 business days after confirmation.
+              All orders are processed within 1-2 business days after confirmation.
             </li>
             <li className="text-sm text-[#aaa] leading-[1.9]">
               Orders are not processed or dispatched on Sundays or public holidays.
@@ -122,10 +122,10 @@ export default function ShippingPage() {
         <section className="mb-0">
           <h2 className="text-base font-medium text-[#E9E9E9] mb-4">Need Help?</h2>
           <p className="text-sm text-[#aaa] leading-[1.9]">
-            Contact our support team on WhatsApp or at <a href="mailto:contact@smdrips.com" className="text-[#defc3e] hover:underline">contact@smdrips.com</a>.
+            Contact our support team on WhatsApp or at <a href="mailto:contact@smgarments.shop" className="text-[#defc3e] hover:underline">contact@smgarments.shop</a>.
           </p>
           <a
-            href="https://wa.me/923190328248"
+            href="https://wa.me/923396049590"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block mt-4 bg-[#defc3e] text-[#000000] text-xs font-semibold px-4 py-2.5 tracking-wide rounded-md hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(222,252,62,0.5)] transition-all duration-300"
