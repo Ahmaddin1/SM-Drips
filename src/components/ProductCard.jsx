@@ -105,12 +105,12 @@ const ProductCard = forwardRef(function ProductCard({ product }, ref) {
         ) : null}
 
         {!isOutOfStock ? (
-          <div className="pointer-events-none absolute inset-0 bg-black/40 opacity-100 transition-opacity duration-300 md:opacity-0 group-hover:pointer-events-auto md:group-hover:opacity-100">
+          <>
             <button
               type="button"
               aria-label={`Open cart options for ${name}`}
               onClick={handleCartButtonClick}
-              className="pointer-events-auto absolute right-2 bottom-2 flex h-9 w-9 items-center justify-center rounded-full bg-[#defc3e]"
+              className="absolute right-2 bottom-2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#defc3e] md:hidden"
             >
               <ShoppingBag
                 className="h-4 w-4 text-black"
@@ -118,7 +118,22 @@ const ProductCard = forwardRef(function ProductCard({ product }, ref) {
                 aria-hidden="true"
               />
             </button>
-          </div>
+
+            <div className="pointer-events-none absolute inset-0 hidden bg-black/40 opacity-0 transition-opacity duration-300 md:block md:group-hover:pointer-events-auto md:group-hover:opacity-100">
+              <button
+                type="button"
+                aria-label={`Open cart options for ${name}`}
+                onClick={handleCartButtonClick}
+                className="pointer-events-auto absolute right-2 bottom-2 flex h-9 w-9 items-center justify-center rounded-full bg-[#defc3e]"
+              >
+                <ShoppingBag
+                  className="h-4 w-4 text-black"
+                  strokeWidth={1.8}
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
+          </>
         ) : null}
       </div>
 

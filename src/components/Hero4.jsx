@@ -118,6 +118,7 @@ export default function Hero4() {
         });
 
         entryTl
+          .set(containerRef.current, { opacity: 1 })
           .fromTo(
             containerRef.current.querySelectorAll(".hero-word"),
             { yPercent: 110, opacity: 0, scale: 1.08 },
@@ -206,6 +207,7 @@ export default function Hero4() {
       <section
         ref={containerRef}
         className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black py-20"
+        style={{ opacity: 0 }}
       >
         <div className="hero-bg-word pointer-events-none absolute inset-0 flex items-center justify-center font-heading text-[clamp(120px,25vw,320px)] font-bold uppercase leading-none tracking-tight opacity-0 text-white/10">
           DRIP

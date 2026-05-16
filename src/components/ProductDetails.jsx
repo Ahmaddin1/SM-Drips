@@ -113,36 +113,40 @@ export default function ProductDetails({ product }) {
   useGSAP(() => {
     const imageElements = imageGalleryRef.current?.children;
     const infoElements = productInfoRef.current?.children;
+    const sharedEntryFrom = { opacity: 0, y: 20 };
+    const sharedEntryTo = {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.2,
+      ease: "power2.out",
+    };
 
     if (imageElements) {
       gsap.fromTo(
         Array.from(imageElements),
-        { opacity: 0 },
+        sharedEntryFrom,
         {
-          opacity: 1,
-          duration: 0.6,
-          stagger: 0.1,
+          ...sharedEntryTo,
           scrollTrigger: {
             trigger: imageGalleryRef.current,
             start: "top 80%",
           },
-        }
+        },
       );
     }
 
     if (infoElements) {
       gsap.fromTo(
         Array.from(infoElements),
-        { opacity: 0 },
+        sharedEntryFrom,
         {
-          opacity: 1,
-          duration: 0.6,
-          stagger: 0.08,
+          ...sharedEntryTo,
           scrollTrigger: {
             trigger: productInfoRef.current,
             start: "top 80%",
           },
-        }
+        },
       );
     }
   });
