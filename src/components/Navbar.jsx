@@ -71,7 +71,7 @@ export default function Navbar({ brandName }) {
       </div>
 
       <div className="pointer-events-none sticky top-4 z-50 hidden w-full justify-center md:flex">
-        <div className="pointer-events-auto relative flex w-[65%] items-center rounded-full border border-[#3a3a3a] bg-black/60 backdrop-blur-md px-5 py-3">
+        <div className="pointer-events-auto relative flex w-[90%] items-center rounded-full border border-[#3a3a3a] bg-black/60 backdrop-blur-md px-5 py-3">
           <Link href="/" aria-label={brandName} className="shrink-0">
             <Image
               src="/icon.png"
